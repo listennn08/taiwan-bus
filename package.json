@@ -3,7 +3,7 @@
     "dev": "nodemon",
     "prod": "pnpm build && npm run server:prod",
     "build": "vite build && vite build --ssr",
-    "server:prod": "ts-node ./server"
+    "server:prod": "npx ts-node -r tsconfig-paths/register ./server --files"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
