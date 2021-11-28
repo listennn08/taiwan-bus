@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "dist/apollo",
     "target": "es2017",
     "isolatedModules": false,
     "noEmit": false,
@@ -14,5 +14,5 @@
       "#/*": ["./apollo/*"]
     }
   },
-  "include": ["server/*.ts", "apollo/**/*.ts"]
+  "include": ["apollo/**/*.ts",]
 }

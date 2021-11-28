@@ -25,7 +25,6 @@ axios.interceptors.request.use((config) => {
     ...config.headers,
     ...getAuth(),
   }
-
   return config
 })
 

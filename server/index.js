@@ -1,17 +1,16 @@
-import express from 'express'
-import http from 'http'
-import dotenv from 'dotenv'
-import path from 'path'
-import { ApolloServer } from 'apollo-server-express'
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
-import { createPageRenderer } from 'vite-plugin-ssr'
+const express = require('express')
+const http = require('http')
+const path = require('path')
+const { ApolloServer } = require('apollo-server-express')
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core')
+const { createPageRenderer } = require('vite-plugin-ssr')
 
-dotenv.config({
+require('dotenv').config({
   path: path.resolve(process.cwd(), `.env.local`)
 })
 
-import { typeDefs } from '../apollo/typeDefs'
-import { resolvers } from '../apollo/resolvers'
+const { typeDefs } = require('../dist/apollo/typeDefs')
+const { resolvers } =  require('../dist/apollo/resolvers')
 
 const isProduction = process.env.NODE_ENV === 'production'
 const root = `${__dirname}/..`
