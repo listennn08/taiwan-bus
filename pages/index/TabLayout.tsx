@@ -9,6 +9,7 @@ import { getRoutes, getStations } from '../api'
 
 const TabLayout = ({ children }: { children: ReactChild }) => {
   const dispatch = useDispatch()
+  const [text, setText] = useState('')
   const { idx, keyword, currentCity } = useSelector<RootState, ISearchSlice>((state) => state.search)
   const placeholder = idx === 0 ? '搜尋公車號碼' : idx === 1 ? '搜尋站牌名稱' : '搜尋客運號碼'
 
@@ -38,11 +39,16 @@ const TabLayout = ({ children }: { children: ReactChild }) => {
     }
   ]
 
-  const search = (e: ChangeEvent) => {
-    const element = e.target as HTMLInputElement
-    dispatch(setKeyword(element.value))
+  const search = (t: string) => {
+    dispatch(setKeyword(t))
   }
 
+  const handleChange = (e: ChangeEvent) => {
+    const element = e.target as HTMLInputElement
+    setText(element.value)
+    debounceSearch(element.value)
+  }
+  const debounceSearch = useCallback(debounce(search, 800), [])
   const fetchResult = async () => {
     if (!idx) {
       dispatch(setIsLoading(true))
@@ -72,10 +78,10 @@ const TabLayout = ({ children }: { children: ReactChild }) => {
 
   useEffect(() => {
     if (currentCity.CityName, keyword) {
-      
       fetchResult()
     }
   }, [keyword, currentCity])
+
   return (
     <div>
       <h2 className="text-white text-[2.5rem] mb-7.5 text-center font-bold">
@@ -123,7 +129,7 @@ const TabLayout = ({ children }: { children: ReactChild }) => {
               <div>
                 <input
                   placeholder={placeholder}
-                  value={keyword}
+                  value={text}
                   className="
                     placeholder-gray-400
                     border border-transparent
@@ -136,7 +142,7 @@ const TabLayout = ({ children }: { children: ReactChild }) => {
                     shadow-md
                     min-w-120
                   "
-                  onChange={debounce(search, 1000)}
+                  onChange={handleChange}
                 />
               </div>
             </div>
