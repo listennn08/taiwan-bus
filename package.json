@@ -3,7 +3,7 @@
     "dev": "nodemon",
     "prod": "pnpm build && npm run server:prod",
     "build": "vite build && vite build --ssr",
-    "server:prod": "npx ts-node -r tsconfig-paths/register --project tsconfig.server.json"
+    "server:prod": "npx cross-env NODE_ENV=production ts-node -r tsconfig-paths/register --project tsconfig.server.json"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
@@ -23,7 +23,8 @@
     "rxjs": "^7.4.0",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.12.0",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "@iconify/json": "^1.1.431",
@@ -36,7 +37,6 @@
     "@types/react-dom": "^17.0.11",
     "@vitejs/plugin-react": "^1.0.9",
     "@welldone-software/why-did-you-render": "^6.2.3",
-    "cross-env": "^7.0.3",
     "lodash.debounce": "^4.0.8",
     "unplugin-auto-import": "^0.4.14",
     "unplugin-icons": "^0.12.18",
