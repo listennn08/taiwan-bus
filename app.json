@@ -1,0 +1,7 @@
+{
+  "name": "DeDeBus",
+  "description": "等等公車",
+  "repository": "https://github.com/listennn08/taiwan-bus",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["node", "express", "static"]
+}
