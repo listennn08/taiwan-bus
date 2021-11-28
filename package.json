@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "nodemon",
     "prod": "pnpm build && npm run server:prod",
-    "build": "vite build && vite build --ssr && pnpm build:server",
+    "build": "vite build && vite build --ssr && npm run build:server",
     "build:server": "tsc --project tsconfig.server.json && tsc-alias -p tsconfig.server.json",
     "start:server": "cross-env NODE_ENV=production node server",
     "server:prod": "npx cross-env NODE_ENV=production ts-node -r tsconfig-paths/register ./server"
