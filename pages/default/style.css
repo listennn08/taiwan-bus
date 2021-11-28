@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Rubik:wght@400;500;600;700;800&display=swap');
+
+body {
+  font-family: 'Rubik', 'Noto Sans TC';
+}
+
+.home {
+  background-image: linear-gradient(143.04deg, #70EBB0 13.42%, #40CACA 84.3%);
+}
+
+@keyframes move {
+  to {
+    transform: translateX(-100%);
+  }
+}
+@layer components {
+  .selectCard {
+    @apply
+      bg-white
+      text-gray-500
+      min-w-20 max-h-20
+      px-3 py-7
+      mr-5
+      text-center
+      rounded-xl
+      border border-green-200 hover:border-green-500
+      transition-colors
+      cursor-pointer
+      relative
+    ;
+
+    &.active {
+      @apply border-green-500 shadow-md;
+      &::before {
+        content: '';
+        @apply absolute top-2.5 -left-0.5 w-5 h-4 rounded-sm rounded-br-lg bg-primary;
+      }
+    }
+
+    &.active::after {
+      content: '';
+      @apply absolute top-3 left-1 w-1.5 h-2.5 bg-transparent border-b-2 border-r-2 border-white rotate-45 transform rounded-br-[2px];
+    }
+  }
+
+  .relative > .selectCard {
+    @apply mr-0;
+  }
+
+  .tab-ask-title {
+    @apply pl-2 relative text-green-800 mb-4;
+
+    &::before {
+      content: '';
+      @apply
+        border-2 border-primary
+        mr-2
+        rounded-full
+        absolute left-0 top-1/7 bottom-1/7
+      ;
+    }
+  }
+
+  .tabs {
+    @apply flex pr-11;
+
+    &-item {
+      @apply relative;
+
+      & a {
+        color: #1E373F99;
+        @apply
+        bg-green-200
+          flex items-center justify-center
+          relative
+          px-10 py-2.5
+        ;
+
+        &::after, &::before {
+          @apply w-5 h-5  bg-transparent z-1;
+        }
+
+        &::before {
+          @apply -left-5 rounded-br-[10px];
+        }
+
+        &::after {
+          @apply -right-5 rounded-bl-[10px];
+        }
+      }
+      
+      &:nth-child(2) {
+        @apply z-2;
+      }
+
+      &:first-of-type {
+        @apply rounded-tr-2xl;
+
+        & a {
+          @apply rounded-tr-2xl;
+        }
+      }
+
+      &:not(:first-of-type) {
+        @apply rounded-t-2xl;
+
+        & a {
+          @apply rounded-t-2xl;
+        }
+      }
+
+      &:not(:last-child)::after, &:not(:last-child) a::after,
+      &:not(:first-of-type)::before, &:not(:first-of-type) a::before {
+        content: '';
+      }
+
+      &::before, &::after,
+      & a::before, & a::after {
+        @apply absolute bottom-0;
+      }
+
+      &::before, &::after {
+        @apply w-2.5 h-2.5 bg-transparent;
+      }
+
+      &::before {
+        @apply -left-2.5;
+      }
+
+      &::after {
+        @apply -right-2.5;
+      }
+
+      &.active {
+        @apply z-3;
+
+        & a {
+          @apply text-secondary z-2 bg-white bg-opacity-90;
+
+          &::before, &::after {
+            @apply bg-green-200;
+          }
+        }
+
+        &::before, &::after {
+          @apply bg-white bg-opacity-90;
+        }
+      }
+
+      &.next-disabled {
+        & a {
+          &::before, &::after {
+            @apply bg-gray-300;
+          }
+        }
+      }
+
+      &.disabled {
+
+        & a {
+          @apply pointer-events-none bg-gray-300;
+
+          &::before, &::after {
+            @apply bg-gray-300;
+          }
+        }
+      }
+    }
+  }
+
+  .dropdown {
+    @apply
+      absolute top-full right-0
+      transform translate-y-3
+      bg-white
+      w-13/2
+      py-6.5 px-5.5
+      rounded-2xl
+      shadow-md
+      z-1
+    ;
+
+    &::after {
+      content: '';
+      @apply
+        absolute right-7 -top-5
+        border-t-0 border-[11px]  border-transparent border-b-white
+      ;
+    }
+  }
+
+  .dropdown-button {
+    @apply
+      px-4 py-1
+      mx-1.5 my-1.5
+      border border-[#C4D2D3]
+      rounded-[3.5rem]
+      cursor-pointer
+      text-gray-500
+      hover:(border-primary)
+      focus:(outline-none border-primary text-secondary)
+    ;
+
+    &.active {
+      @apply text-gray-600 border-primary;
+    }
+  }
+
+  .scroll-bar {
+    @apply translate-x-0 transform hover:animate-paused;
+    animation: move 30s linear infinite;
+  }
+
+  .scroll\:hidden::-webkit-scrollbar {
+    @apply hidden;
+  }
+}
+
+.leaflet-popup-pane {
+  @apply z-400;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  @apply bg-transparent shadow-none;
+}

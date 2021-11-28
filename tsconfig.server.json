@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "dist",
+    "target": "es2017",
+    "isolatedModules": false,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "types": [
+      "./types/index"
+    ],
+    "paths": {
+      "#/*": ["./apollo/*"]
+    }
+  },
+  "include": ["./server/*.ts", "apollo/**/*.ts"]
+}

@@ -1,19 +1,31 @@
-import React from "react";
-import { Counter } from "./Counter";
+import background from '@/assets/home.svg'
+import background1 from '@/assets/home-1.svg'
+import SearchPanel from './SearchPanel'
+import SearchResult from './SearchResult'
 
-export { Page };
+const Background = () => (
+  <>
+    <div
+      className="absolute bottom-0 inset-x-0 w-full h-111 bg-cover bg-center z-0"
+      style={{ backgroundImage: `url('${background1}')` }}
+    />
+    <div
+      className="absolute bottom-0 inset-x-0 w-full h-83 bg-cover bg-center z-0"
+      style={{ backgroundImage: `url('${background}')` }}
+    />
+  </>
+)
 
-function Page() {
+const Index = () => {
   return (
-    <>
-      <h1>Welcome</h1>
-      This page is:
-      <ul>
-        <li>Rendered to HTML.</li>
-        <li>
-          Interactive. <Counter />
-        </li>
-      </ul>
-    </>
-  );
+    <div className="h-full home relative overflow-y-hidden">
+      <Background />
+      <div className="relative z-1 flex pt-15 h-full">
+        <SearchPanel />
+        <SearchResult />
+      </div>
+    </div>
+  )
 }
+
+export default Index

@@ -5,15 +5,26 @@
     "moduleResolution": "Node",
     "target": "ES2017",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client"],
-    "jsx": "react",
+    "types": [
+      "vite/client",
+      "unplugin-icons/types/react",
+    ],
+    "jsx": "react-jsx",
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "#/*": ["./apollo/*"]
+    },
   },
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {
-      "module": "CommonJS"
+      "module": "CommonJS",
+      "paths": {
+        "#/*": ["./apollo/*"]
+      }
     }
   }
 }

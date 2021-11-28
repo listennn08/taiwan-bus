@@ -1,0 +1,1 @@
+export default '/info/bus/:city/:routeName'
