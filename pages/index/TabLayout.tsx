@@ -136,7 +136,7 @@ const TabLayout = ({ children }: { children: ReactChild }) => {
                     shadow-md
                     min-w-120
                   "
-                  onChange={search}
+                  onChange={debounce(search, 1000)}
                 />
               </div>
             </div>
