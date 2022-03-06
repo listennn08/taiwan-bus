@@ -1,4 +1,4 @@
-import { getRouteShape } from '#/services'
+import { getRouteShape } from '../../services'
 import { generateGeoStringToLatLngArray } from '../utils'
 
 export const shape = async (

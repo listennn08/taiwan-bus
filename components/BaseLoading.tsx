@@ -1,4 +1,4 @@
-import IconLoading from '~icons/custom/loading'
+import IconLoading from '@/assets/icons/loading.svg'
 
 const BaseLoading = ({ isLoading }: { isLoading: boolean }) => (
   <div

@@ -1,4 +1,4 @@
-import { getNearStations } from '#/services'
+import { getNearStations } from '../../services'
 
 export const nearStations = async (_parent: undefined, _args: { latlng: [number, number] }, ctx: any) => {
   const { latlng } = _args

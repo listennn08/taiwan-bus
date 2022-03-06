@@ -1,7 +1,22 @@
-import { getBusStopOfRoute, getEstimatedTimeOfArrival, getRouteByCity, getRouteByRouteName } from '#/services'
+import { getBusStopOfRoute, getEstimatedTimeOfArrival, getRouteByCity, getRouteByRouteName } from '../../services'
 import { from, map, mergeMap } from 'rxjs'
-// import { cityGet } from '#/services/core/cityCore'
-import { city } from '#/data/city'
+// import { cityGet } from './../services/core/cityCore'
+import { city } from '../../data/city'
+import winston from 'winston'
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'route-service' },
+  transports: [
+    //
+    // - Write all logs with importance level of `error` or less to `error.log`
+    // - Write all logs with importance level of `info` or less to `combined.log`
+    //
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+})
 
 interface IRouteQueries {
   routesByCity: (parent: undefined, args: { city: string, keyword?: string }) => Promise<IBusRoute[]|[]>
@@ -90,6 +105,7 @@ export const routeQueries: IRouteQueries = {
       filter: `RouteUID eq '${routeUID}'`,
     })).data
 
+    logger.info(estimatedTimeResp)
     for (let i = 0; i < resp.length; i += 1) {
       for (let j = 0; j < estimatedTimeResp.length; j += 1) {
         if (resp[i].Direction === estimatedTimeResp[j].Direction) {

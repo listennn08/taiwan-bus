@@ -113,7 +113,7 @@ export const STATIONS_BY_KEYWORD = gql`
   }
 `
 
-export const PARTICULAR_ROUTE = gql`
+export const PARTICULAR_ROUTE_STOP = gql`
   query ParticularStopOfRoute($city: String!, $routeName: String!, $routeUID: String) {
     particularStopOfRoute(city: $city, routeName: $routeName, routeUID: $routeUID) {
       RouteUID
@@ -233,6 +233,22 @@ export const SCHEDULE = gql`
     schedule(city: $city, routeName: $routeName, routeUID: $routeUID) {
       RouteUID
       ServiceDay
+    }
+  }
+`
+export const PARTICULAR_ROUTE = gql`
+  query ParticularRoute($city: String!, $routeName: String!) {
+    particularRoute(city: $city, routeName: $routeName) {
+      RouteName {
+        Zh_tw
+        En
+      }
+      DepartureStopNameZh
+      DepartureStopNameEn
+      DestinationStopNameZh
+      DestinationStopNameEn
+      TicketPriceDescriptionZh
+      TicketPriceDescriptionEn
     }
   }
 `

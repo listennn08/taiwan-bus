@@ -1,4 +1,4 @@
-import { getStationsByKeyword } from '#/services/index'
+import { getStationsByKeyword } from '../../services'
 
 export const stationsByKetword = async (_parent: undefined, _args: { city: string, keyword: string }, ctx: any) => {
   const { city, keyword } = _args

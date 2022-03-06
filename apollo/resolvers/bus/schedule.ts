@@ -1,4 +1,4 @@
-import { getRouteSchedule } from '#/services'
+import { getRouteSchedule } from '../../services'
 
 export const schedule = async (_praent: undefined, _args: { city: string, routeName: string, routeUID: string }) => {
   const { city, routeName, routeUID } = _args
@@ -10,13 +10,13 @@ export const schedule = async (_praent: undefined, _args: { city: string, routeN
   
   let ServiceDay: string[] = []
   if (resp[0]?.Frequencys) {
-    ServiceDay = [...new Set(resp[0].Frequencys.flatMap((el) => {
+    ServiceDay = Array.from(new Set(resp[0].Frequencys.flatMap((el) => {
       return Object.keys(el.ServiceDay || {}).filter((key) => el.ServiceDay?.[key] === 1)
-    }))]
+    })))
   } else if (resp[0]?.Timetables) {
-    ServiceDay = [...new Set(resp[0].Timetables.flatMap((el) => {
+    ServiceDay = Array.from(new Set(resp[0].Timetables.flatMap((el) => {
       return Object.keys(el.ServiceDay || {}).filter((key) => el.ServiceDay?.[key] === 1)
-    }))]
+    })))
   }
 
   return {

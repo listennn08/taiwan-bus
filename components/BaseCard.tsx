@@ -17,7 +17,7 @@ const BaseCard = ({ children, text, onClick }: IProps) => {
         shadow 
         bg-white bg-opacity-80
         mx-2.5 mb-2.5
-        w-[calc(50%-2.5rem)]
+        md:w-[calc(50%-2.5rem)]
         cursor-pointer
         hover:(bg-opacity-100)
         transition-all
@@ -26,7 +26,7 @@ const BaseCard = ({ children, text, onClick }: IProps) => {
       <div className="text-secondary font-medium text-2xl mb-2">
         {children[0]}
       </div>
-        <div className="text-gray-500 text-right max-w-1/2 relative" title={text}>
+        <div className="text-gray-500 text-right max-w-2/3 md:max-w-1/2 relative" title={text}>
           {children[1]}
         <div className="overflow-hidden">
           <div
