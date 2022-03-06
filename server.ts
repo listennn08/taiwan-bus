@@ -1,9 +1,16 @@
+import dotenv from 'dotenv'
+import path from 'path'
+
+dotenv.config({
+  path: path.resolve(process.cwd(), `.env.local`)
+})
+
 import boxen from 'boxen'
 import chalk from 'chalk'
 import next from 'next'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
-import { typeDefs } from './apollo/type-defs'
+import { typeDefs } from './apollo/typeDefs'
 import { resolvers } from './apollo/resolvers'
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -30,7 +37,6 @@ async function startServer() {
       '\n> Apollo ready on ' + chalk.cyan.underline(`http://localhost:${PORT}${apolloServer.graphqlPath}\n`),
       {
         padding: 1,
-        
       }
     ))
   })

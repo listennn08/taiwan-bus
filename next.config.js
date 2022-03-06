@@ -1,4 +1,6 @@
 const WindiCSSWebpackPlugin = require('windicss-webpack-plugin')
+const Icons = require('unplugin-icons/webpack')
+const IconsResolver = require('unplugin-icons/resolver')
 const AutoImport = require('unplugin-auto-import/webpack')
 
 /** @type {import('next').NextConfig} */
@@ -7,11 +9,43 @@ module.exports = {
   images: {
     domains: ['raw.githubusercontent.com'], // next/image need add image domain
   },
+
   webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ["@svgr/webpack"]
+    })
     config.plugins.push(new WindiCSSWebpackPlugin())
     config.plugins.push(AutoImport({
-      imports: ['react']
+      imports: [
+        'react',
+        {
+          'react-router-dom': [
+            'useHistory',
+            'useRouteMatch',
+            'useLocation',
+          ],
+          'react-redux': [
+            'useSelector',
+            'useDispatch',
+          ],
+          'axios': [
+            ['default', 'axios'],
+          ],
+        },
+      ],
+      resolvers: [
+        IconsResolver({
+          prefix: 'Icon',
+          extension: 'jsx'
+        })
+      ],
     }))
+    config.plugins.push(Icons({
+      compiler: 'jsx',
+      jsx: 'react',
+    }))
+
     return config
   },
 }

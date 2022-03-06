@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, combineReducers, AnyAction, Reducer, Middleware } from 'redux'
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
 import thunkMiddleware from 'redux-thunk'
-import count from './count/reducer'
+import search, { ISearchReducer } from './search/reducer'
 
-export interface rootState {
-  count: ReturnType<typeof count>
+export interface RootState {
+  search: ISearchReducer
 }
 
 const bindMiddleware = (middleware: Middleware[]) => {
@@ -17,7 +17,7 @@ const bindMiddleware = (middleware: Middleware[]) => {
 }
 
 const combineReducer = combineReducers({
-  count
+  search
 })
 
 const reducer = (state: any, action: AnyAction) => {
@@ -35,4 +35,4 @@ const reducer = (state: any, action: AnyAction) => {
 
 const initStore = () => createStore(reducer, bindMiddleware([thunkMiddleware]))
 
-export const withRedux = createWrapper(initStore).withRedux
+export const wrapper = createWrapper(initStore)
