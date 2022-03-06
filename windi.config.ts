@@ -1,15 +1,10 @@
-import { defineConfig } from 'vite-plugin-windicss'
+import { defineConfig } from 'windicss/helpers'
 
 export default defineConfig({
-  attributify: true,
   extract: {
-    include: [
-      'pages/**/*.{vue,html,jsx,tsx,css}',
-      'rerender/**/*.{vue,html,jsx,tsx,css}',
-      'components/**/*.{vue,html,jsx,tsx,css}'
-    ],
+    include: ['**/*.{jsx,tsx,css}'],
+    exclude: ['node_modules', '.git', '.next'],
   },
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       width: {
@@ -92,9 +87,6 @@ export default defineConfig({
           800: '#2D2F2E',
         },
       }
-    },
-  },
-  variants: {
-  },
-  plugins: [],
+    }
+  }
 })

@@ -1,18 +1,11 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "dist/apollo",
+    "outDir": "dist",
     "target": "es2017",
     "isolatedModules": false,
-    "noEmit": false,
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "types": [
-      "./types/index"
-    ],
-    "paths": {
-      "#/*": ["./apollo/*"]
-    }
+    "noEmit": false
   },
-  "include": ["apollo/**/*.ts",]
+  "include": ["server.ts", "apollo/**/*.ts"]
 }
