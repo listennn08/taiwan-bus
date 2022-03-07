@@ -11,15 +11,6 @@ interface IProps {
 
 const timeConverter = (t: number) => t ? Math.floor(t / 60) : 0
 
-const Map = dynamic(import('@/components/info/BusMap'), {
-  ssr: false,
-  loading: () => (
-    <div className="h-full flex items-center justify-center">
-      <p className="text-2xl">Loading map...</p>
-    </div>
-  )
-})
-
 const StopStatus =[
   '尚未發車',
   '交管不停靠',
@@ -60,6 +51,17 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
   const [hoverStopId, setHoverStopId] = useState('')
   const [currentStopId, setCurrentStopId] = useState('')
 
+  const Map = useMemo(() => dynamic(
+    import('@/components/info/BusMap'), 
+    {
+      ssr: false,
+      loading: () => (
+        <div className="h-full flex items-center justify-center">
+          <p className="text-2xl">Loading map...</p>
+        </div>
+      )
+    }
+  ), [])
   const handleDirectionClick = (e: MouseEvent) => {
     e.preventDefault()
     const element = e.target as HTMLLIElement
@@ -86,6 +88,14 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
     setCurrentStopId(id)
   }
 
+  const [isBrowser, setIsBrowser] = useState(false);
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
+  if (!isBrowser) {
+    return null;
+  }
   return (
     <>
       <div className="mb-5 text-secondary text-2xl font-medium">
@@ -157,7 +167,7 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
             ))}
           </ul>
           <div className="w-2/3 h-128 rounded">
-            <Map shape={shape} direction={direction} routeInfo={routeInfo} currentStopId={currentStopId} />
+            {isBrowser && <Map shape={shape} direction={direction} routeInfo={routeInfo} currentStopId={currentStopId} />}
           </div>
         </div>
       </section>

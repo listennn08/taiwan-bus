@@ -9,7 +9,11 @@ module.exports = {
   images: {
     domains: ['raw.githubusercontent.com'], // next/image need add image domain
   },
-
+  env: {
+    API_KEY: 'bcf4362674a3435c934f9ef8b4470b91',
+    API_SECRET: 'EwLWG1SgD9rAjMMv-Dsyc0Bskp8',
+    BUS_API_PATH: 'https://ptx.transportdata.tw/MOTC/v2/Bus'
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

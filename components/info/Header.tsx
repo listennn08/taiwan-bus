@@ -25,7 +25,7 @@ const InfoHeader = ({ cityName, route, routeInfo, fetchData }: IProps) => {
   const [time, setTime] = useState(60)
   const [isCopyTextShow, setIsCopyTextShow] = useState(false)
   const copy = () => {
-    const url = window.location.href
+    const url = location.href
     navigator.clipboard.writeText(`查看等等公車的${cityName} ${route?.RouteName.Zh_tw}公車 即時動態： ${url}`)
     setIsCopyTextShow(true)
   }
@@ -39,18 +39,18 @@ const InfoHeader = ({ cityName, route, routeInfo, fetchData }: IProps) => {
     if (isCopyTextShow) setTimeout(() => setIsCopyTextShow(false), 2000)
   }, [isCopyTextShow])
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (time > 0) {
-        setTime((v) => v - 5)
-      } else {
-        setTime(60)
-        fetchData()
-      }
-    }, 5000)
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (time > 0) {
+  //       setTime((v) => v - 5)
+  //     } else {
+  //       setTime(60)
+  //       fetchData()
+  //     }
+  //   }, 5000)
 
-    return () => clearTimeout(timer)
-  }, [time, fetchData])
+  //   return () => clearTimeout(timer)
+  // }, [time, fetchData])
   return (
     <>
     <div className="flex items-center mb-10">

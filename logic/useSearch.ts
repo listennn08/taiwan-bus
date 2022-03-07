@@ -1,9 +1,58 @@
 import { ChangeEvent, FocusEvent,  } from 'react'
 import debounce from 'lodash.debounce'
-import { getRoutes, getStations } from '@/pages/api'
+import { getRouteByCity, getRoutes, getStations } from '@/pages/api'
 import { setKeyword, setIsLoading, setResultBusRoutes, setResultStations } from '@/store/search/action'
 import { RootState } from '@/store'
 import { ISearchReducer } from '@/store/search/reducer'
+import { from, map, mergeMap } from 'rxjs'
+
+async function routesByCity({ city, keyword }: { city: string, keyword: string }) {
+  let filter
+  if (keyword) {
+    filter = `contains(RouteName/Zh_tw, '${keyword}')` 
+  }
+
+  try {
+    const resp  = (await getRouteByCity({ 
+      city,
+      filter
+    })).data
+    return resp
+  } catch (e) {
+    console.log(e)
+    return []
+  }
+}
+
+async function allRouteByKeyword({ keyword }: { keyword: string }) {
+  const cities = (await axios.get('https://raw.githubusercontent.com/listennn08/jsonData/master/cities.json')).data as ICity[]
+  const return$ = from(cities).pipe(
+    map((x) => {
+      let filter
+      if (keyword) {
+        filter = `contains(RouteName/Zh_tw, '${keyword}')`
+      }
+
+      return { 
+        city: x.City,
+        filter,
+      }
+    }),
+    mergeMap(getRouteByCity)
+  )
+
+  const resp: IBusRoute[] = []
+  try {
+    await return$.forEach(({ data }) => {
+      resp.push(...data)
+    })
+
+    return resp
+  } catch (e) {
+    console.log(e)
+    return []
+  }
+}
 
 export const useSearch = () => {
   const [firstLoading, setFirstLoading] = useState(true)
@@ -28,12 +77,12 @@ export const useSearch = () => {
       dispatch(setIsLoading(true))
       let resp: IBusRoute[]
       if (currentCity.City) {
-        resp = (await getRoutes({
+        resp = (await routesByCity({
           city: currentCity.City,
           keyword
-        })).data.data.routesByCity
+        }))
       } else {
-        resp = (await getRoutes({ keyword })).data.data.allRouteByKeyword
+        resp = (await allRouteByKeyword({ keyword }))
       }
 
       dispatch(setResultBusRoutes(resp))

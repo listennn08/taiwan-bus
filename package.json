@@ -2,8 +2,8 @@
   "name": "taiwan-bus",
   "private": true,
   "scripts": {
-    "dev": "nodemon",
-    "build": "next build && tsc --project tsconfig.server.json",
+    "dev": "next",
+    "build": "next build",
     "start": "cross-env NODE_ENV=production node dist/server.js",
     "lint": "next lint"
   },

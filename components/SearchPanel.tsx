@@ -60,8 +60,7 @@ const SearchPanel = ({ cities, currentCity, otherCity, setCurrentCity, setOtherC
   }, [dropdownRef])
 
   useEffect(() => {
-    if (typeof window !== 'undefined')
-      setDisplayCount(isMobile ? 5 : 4)
+    setDisplayCount(isMobile ? 5 : 4)
   }, [])
 
   return (
