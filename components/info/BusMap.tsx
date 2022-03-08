@@ -1,14 +1,7 @@
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet'
 import BaseMarkerIcon from './BaseMarkerIcon'
 
-interface IProp {
-  shape: IBusShape[]
-  direction: number
-  routeInfo: IBusStopOfRoute[]
-  currentStopId: string
-}
-
-const MapController = ({ currentStopId, routeInfo, direction }: IProp) => {
+const MapController = ({ currentStopId, routeInfo, direction }: IMapProp) => {
   const map = useMap()
 
   useEffect(() => {
@@ -23,7 +16,7 @@ const MapController = ({ currentStopId, routeInfo, direction }: IProp) => {
   return (<></>)
 }
 
-const BusMap = (props: IProp) => {
+const BusMap = (props: IMapProp) => {
   const { shape, direction, routeInfo } = props
 
   return (

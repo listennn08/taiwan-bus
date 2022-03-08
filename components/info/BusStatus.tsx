@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { ComponentType, MouseEvent } from 'react'
 import Image from 'next/image'
 import BaseArrivalLabel from './BaseArrivalLabel'
 import dynamic from 'next/dynamic'
@@ -17,6 +17,18 @@ const StopStatus =[
   '末班車已過',
   '今日未營運'
 ]
+
+// const Map = dynamic(
+//   import('./BusMap'), 
+//   {
+//     ssr: false,
+//     loading: () => (
+//       <div className="h-full flex items-center justify-center">
+//         <p className="text-2xl">Loading map...</p>
+//       </div>
+//     )
+//   }
+// )
 
 const arriveDisplay = (stop?: IStop) => {
   if (stop?.TimeInfo?.StopStatus !== 0) {
@@ -50,18 +62,8 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
   const [direction, setDirection] = useState(0)
   const [hoverStopId, setHoverStopId] = useState('')
   const [currentStopId, setCurrentStopId] = useState('')
+  const [Map, setMap] = useState<any>()
 
-  const Map = useMemo(() => dynamic(
-    import('@/components/info/BusMap'), 
-    {
-      ssr: false,
-      loading: () => (
-        <div className="h-full flex items-center justify-center">
-          <p className="text-2xl">Loading map...</p>
-        </div>
-      )
-    }
-  ), [])
   const handleDirectionClick = (e: MouseEvent) => {
     e.preventDefault()
     const element = e.target as HTMLLIElement
@@ -91,6 +93,18 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
   const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
     setIsBrowser(true);
+    
+    setMap(dynamic(
+      import('./BusMap'), 
+      {
+        ssr: false,
+        loading: () => (
+          <div className="h-full flex items-center justify-center">
+            <p className="text-2xl">Loading map...</p>
+          </div>
+        )
+      }
+    ))
   }, []);
 
   if (!isBrowser) {

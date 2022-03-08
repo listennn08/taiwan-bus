@@ -1,3 +1,9 @@
+interface IMapProp {
+  shape: IBusShape[]
+  direction: number
+  routeInfo: IBusStopOfRoute[]
+  currentStopId: string
+}
 interface ICity {
   City: string
   CityName: string
