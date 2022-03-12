@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import { wrapper } from '@/store'
 import Background from '@/components/layouts/Background'
 import SearchPanel from '@/components/SearchPanel'
@@ -22,12 +21,6 @@ const Home: NextPage = () => {
   }, [])
   return (
     <div className="h-full">
-      <Head>
-        <title>等等公車</title>
-        <meta name="description" content="全台公車資訊整合" />
-        <link rel="icon" href="/logo.svg" />
-      </Head>
-
       <div className="h-full home relative overflow-y-hidden">
         <Background />
         <div className="relative z-1 flex pt-15 h-full">
