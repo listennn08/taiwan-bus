@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import { MouseEvent } from 'react'
 import { isMobile } from 'react-device-detect'
 import ArrowLeftIcon from '@heroicons/react/outline/ArrowLeftIcon'
 import { wrapper } from '@/store'
@@ -11,6 +10,7 @@ import BaseInput from '@/components/BaseInput'
 import Background from '@/components/layouts/Background'
 import SearchResult from '@/components/SearchResult'
 
+import type { MouseEvent, FocusEvent } from 'react'
 interface IProps {
   cityName: string
   isError: boolean
@@ -35,6 +35,11 @@ const Search = ({ cityName, isError }: IProps) => {
     if (!isMobile) router.replace('/')
   }, [router])
 
+  const onHandleFocus = (e: FocusEvent) => {
+    e.preventDefault()
+    handleFocus()
+  }
+
   return (
     <div className="h-full home relative overflow-y-hidden">
       <Background />
@@ -52,7 +57,7 @@ const Search = ({ cityName, isError }: IProps) => {
           show={showNumButton}
           onNumClick={handleNumClick}
           onChange={handleChange}
-          onFocus={handleFocus}
+          onFocus={onHandleFocus}
           ref={inputEl}
         />
       </div>
