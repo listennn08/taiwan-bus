@@ -27,7 +27,7 @@ a {
 }
 
 @layer components {
-  .selectCard {
+  .selected-card {
     @apply
       bg-primary text-white rounded-3xl p-5 ml-10 mr-10 mb-10 w-30 h-30
       md:(bg-white
@@ -95,8 +95,8 @@ a {
       @apply relative flex-1 md:flex-initial;
 
       & a {
-        color: #1E373F99;
         @apply
+          text-[#1E373F99]
         bg-green-200
           flex items-center justify-center
           relative

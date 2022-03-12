@@ -17,10 +17,10 @@ const BaseCard = ({ children, text, onClick }: IProps) => {
         shadow 
         bg-white bg-opacity-80
         mx-2.5 mb-2.5
-        md:w-[calc(50%-2.5rem)]
         cursor-pointer
-        hover:(bg-opacity-100)
         transition-all
+        hover:(bg-opacity-100)
+        md:w-[calc(50%-2.5rem)]
       "
     >
       <div className="text-secondary font-medium text-2xl mb-2">
