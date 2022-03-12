@@ -1,34 +1,18 @@
-import { ComponentType, MouseEvent } from 'react'
+import { MouseEvent } from 'react'
 import Image from 'next/image'
-import BaseArrivalLabel from './BaseArrivalLabel'
 import dynamic from 'next/dynamic'
+import BaseArrivalLabel from './BaseArrivalLabel'
+import { isMobile } from 'react-device-detect'
+import { RefreshIcon } from '@heroicons/react/solid'
+import LocateIcon from '@/assets/icons/locate.svg'
+import { timeConverter } from '@/utils'
 
-interface IProps {
-  route?: IBusRoute,
-  routeInfo: IBusStopOfRoute[],
-  shape: IBusShape[]
-}
-
-const timeConverter = (t: number) => t ? Math.floor(t / 60) : 0
-
-const StopStatus =[
+const StopStatus = [
   '尚未發車',
   '交管不停靠',
   '末班車已過',
   '今日未營運'
 ]
-
-// const Map = dynamic(
-//   import('./BusMap'), 
-//   {
-//     ssr: false,
-//     loading: () => (
-//       <div className="h-full flex items-center justify-center">
-//         <p className="text-2xl">Loading map...</p>
-//       </div>
-//     )
-//   }
-// )
 
 const arriveDisplay = (stop?: IStop) => {
   if (stop?.TimeInfo?.StopStatus !== 0) {
@@ -50,15 +34,25 @@ const arriveDisplay = (stop?: IStop) => {
   }
 
   if (stop?.TimeInfo?.NextBusTime) {
-    return <BaseArrivalLabel text={Intl.DateTimeFormat('zh-tw',{
+    const text = Intl.DateTimeFormat('zh-tw', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false,
-    }).format(new Date(stop?.TimeInfo?.NextBusTime!))} type="bg-success" />
+    }).format(new Date(stop?.TimeInfo?.NextBusTime!))
+
+    return <BaseArrivalLabel text={text} type="bg-success" />
   }
 }
 
-const BusStatus = ({ route, routeInfo, shape }: IProps) => {
+interface IProps {
+  route?: IBusRoute,
+  routeInfo: IBusStopOfRoute[],
+  shape: IBusShape[]
+  refresh: () => void
+}
+
+const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
+  const [isBrowser, setIsBrowser] = useState(false);
   const [direction, setDirection] = useState(0)
   const [hoverStopId, setHoverStopId] = useState('')
   const [currentStopId, setCurrentStopId] = useState('')
@@ -90,29 +84,21 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
     setCurrentStopId(id)
   }
 
-  const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
-    setIsBrowser(true);
+    setIsBrowser(!isMobile)
     
-    setMap(dynamic(
-      import('./BusMap'), 
-      {
-        ssr: false,
-        loading: () => (
-          <div className="h-full flex items-center justify-center">
-            <p className="text-2xl">Loading map...</p>
-          </div>
-        )
-      }
-    ))
-  }, []);
+    setMap(dynamic(import('./BusMap'), {
+      ssr: false,
+      loading: () => (
+        <div className="h-full flex items-center justify-center">
+          <p className="text-2xl">Loading map...</p>
+        </div>)
+    }))
+  }, [])
 
-  if (!isBrowser) {
-    return null;
-  }
   return (
     <>
-      <div className="mb-5 text-secondary text-2xl font-medium">
+      <div className="hidden md:block mb-5 text-secondary text-2xl font-medium">
         公車動態
       </div>
       <section>
@@ -153,13 +139,14 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
         <div className="
           flex items-start
           p-5
-          bg-white
+          bg-light 
+          overflow-hidden
+          md:(bg-white
           min-h-137.5 max-h-137.5
           rounded-r-2xl rounded-b-2xl
-          overflow-hidden
-          mb-12.5
+          mb-12.5)
         ">
-          <ul className="h-127.5 overflow-y-scroll w-1/3 mr-5 px-3">
+          <ul className="h-[calc(100vh-231px)] overflow-y-scroll w-full pb-18 md:(pb-0 w-1/3 mr-5 px-3 h-127.5)">
             {routeInfo[direction]?.Stops?.map((el) => (
               <li
                 key={el.StopUID}
@@ -180,8 +167,42 @@ const BusStatus = ({ route, routeInfo, shape }: IProps) => {
               </li>
             ))}
           </ul>
-          <div className="w-2/3 h-128 rounded">
-            {isBrowser && <Map shape={shape} direction={direction} routeInfo={routeInfo} currentStopId={currentStopId} />}
+          <div className="hidden md:block w-2/3 h-128 rounded">
+            {isBrowser && !isMobile &&
+              <Map shape={shape} direction={direction} routeInfo={routeInfo} currentStopId={currentStopId} />}
+          </div>
+          <div className="
+            fixed bottom-0 inset-x-0
+            flex md:hidden
+            bg-[#26938580]
+            rounded-t-[20px]
+            p-4
+          ">
+            <button
+              type="button"
+              className="
+              py-3 flex-1 rounded-[40px] bg-white text-primary
+              flex items-center justify-center
+            ">
+              <LocateIcon className="w-5 h-5 mr-2" />
+              <span>站牌地圖</span>
+            </button>
+            <button
+              type="button"
+              className="
+                flex
+                w-12
+                text-primary
+                p-2.5 ml-7.5
+                bg-white
+                shadow
+                rounded-full
+                items-center justify-center
+                focus:outline-none
+              "
+            >
+              <RefreshIcon className="w-5" onClick={refresh} />
+            </button>
           </div>
         </div>
       </section>

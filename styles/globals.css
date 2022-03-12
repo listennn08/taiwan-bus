@@ -89,10 +89,10 @@ a {
   }
 
   .tabs {
-    @apply flex pr-11;
+    @apply flex md:pr-11;
 
     &-item {
-      @apply relative;
+      @apply relative flex-1 md:flex-initial;
 
       & a {
         color: #1E373F99;
@@ -247,8 +247,10 @@ a {
       relative
       flex items-center
       p-2.5 rounded-lg
+      mb-1.5
+      bg-white md:bg-transparent
       hover:(bg-primary-light)
-      ;
+    ;
   }
 
   .copy-text {
@@ -263,8 +265,21 @@ a {
     &.show {
       @apply opacity-100;
     }
+  }
 
+  .info-card {
+    @apply 
+      first:rounded-t-2xl last-of-type:rounded-b-2xl
+      bg-white md:(rounded-2xl  w-card-1/3 mx-2.5)
+    ;
 
+    &-title {
+      @apply text-blue-800 py-2.5 px-5 bg-green-300 md:rounded-t-2xl;
+    }
+
+    &:first-of-type .info-card-title {
+      @apply rounded-t-2xl;
+    }
   }
 }
 

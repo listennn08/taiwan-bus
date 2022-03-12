@@ -1,5 +1,8 @@
+import { XIcon } from '@heroicons/react/solid'
 import IconCheck from '@/assets/icons/check.svg'
 import BaseInfoCard from './BaseInfoCard'
+import ShareButton from './ShareButton'
+import { Dispatch, SetStateAction } from 'react'
 
 const showTime = (start?: string, end?: string) => {
   if (start && end) return `${start} ~ ${end}`
@@ -18,18 +21,37 @@ const weekTable: { [key: string]: string } = {
 }
 
 interface IProps {
+  isOpen: boolean
+  cityName?: string
   route?: IBusRoute
   serviceDay: string[]
   operator: TOperatorInfo[]
+  setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const RouteInfo = ({ route, serviceDay, operator }: IProps) => {
+const RouteInfo = ({ isOpen, cityName, route, serviceDay, operator, setIsOpen }: IProps) => {
   return (
-    <>
-      <div className="mb-5 text-secondary text-2xl font-medium">
-        路線資訊
+    <div className={`
+      ${isOpen ? '' : 'hidden'}
+      fixed inset-0
+      bg-secondary backdrop-filter bg-opacity-50 backdrop-blur-[30px]
+      z-999
+      py-10 px-5
+      flex flex-col justify-center
+      md:(static block z-auto px-0 py-0 bg-transparent)
+    `}>
+      <div className="flex items-center mb-5">
+        <div className="
+          text-white font-medium text-3xl
+          md:(text-secondary text-2xl)
+        ">
+          路線資訊
+        </div>
+        <div className="md:hidden ml-auto">
+        <ShareButton cityName={cityName} route={route} />
+        </div>
       </div>
-      <div className="flex -mx-2.5">
+      <div className="flex flex-col md:flex-row md:-mx-2.5">
         <BaseInfoCard title="發車資訊">
           <>
             <div className="text-gray-600 text-lg tracking-wider mb-1.5">
@@ -86,7 +108,14 @@ const RouteInfo = ({ route, serviceDay, operator }: IProps) => {
           </>
         </BaseInfoCard>
       </div>
-    </>
+      <button
+        type="button"
+        className="md:hidden mx-auto rounded-1 bg-secondary w-11 h-11 p-2 text-white transform -translate-y-5"
+        onClick={() => setIsOpen(false)}
+      >
+        <XIcon />
+      </button>
+    </div>
   )
 }
 
