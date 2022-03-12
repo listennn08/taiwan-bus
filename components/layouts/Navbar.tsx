@@ -3,7 +3,7 @@ import IconLogo from '@/assets/icons/logo.svg'
 
 const Navbar = () => {
   return (
-    <div className="fixed top-0 inset-x-0">
+    <div className="fixed top-0 inset-x-0 bg-white">
       <div className="container mx-auto px-2 md:px-0 py-2.5 flex items-center justify-between">
         <h1>
           <Link href="/">

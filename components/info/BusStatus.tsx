@@ -117,7 +117,7 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
                 height={20}
                 alt=""
               />
-              <span className="ml-2">
+              <span className="ml-2 whitespace-nowrap">
                 往 {route?.DestinationStopNameZh}
               </span>
             </a>
@@ -133,7 +133,7 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
                 height={20}
                 alt=""
               />
-              <span className="ml-2"> 
+              <span className="ml-2 whitespace-nowrap"> 
                 往 {route?.DepartureStopNameZh}
               </span>
             </a>

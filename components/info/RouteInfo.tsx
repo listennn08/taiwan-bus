@@ -37,7 +37,8 @@ const RouteInfo = ({ isOpen, cityName, route, serviceDay, operator, setIsOpen }:
       bg-secondary backdrop-filter bg-opacity-50 backdrop-blur-[30px]
       z-999
       py-10 px-5
-      flex flex-col justify-center
+      flex flex-col justify-start
+      overflow-y-scroll
       md:(static block z-auto px-0 py-0 bg-transparent)
     `}>
       <div className="flex items-center mb-5">
