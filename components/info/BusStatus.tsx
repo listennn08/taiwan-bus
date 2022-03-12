@@ -2,8 +2,8 @@ import { MouseEvent } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import BaseArrivalLabel from './BaseArrivalLabel'
-import { isMobile } from 'react-device-detect'
-import { RefreshIcon } from '@heroicons/react/solid'
+import { isMobile as detectMobile } from 'react-device-detect'
+import { RefreshIcon, XIcon } from '@heroicons/react/solid'
 import LocateIcon from '@/assets/icons/locate.svg'
 import { timeConverter } from '@/utils'
 
@@ -53,10 +53,12 @@ interface IProps {
 
 const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
   const [isBrowser, setIsBrowser] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [direction, setDirection] = useState(0)
   const [hoverStopId, setHoverStopId] = useState('')
   const [currentStopId, setCurrentStopId] = useState('')
   const [Map, setMap] = useState<any>()
+  const [mapPopup, setMapPopup] = useState(false)
 
   const handleDirectionClick = (e: MouseEvent) => {
     e.preventDefault()
@@ -85,7 +87,8 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
   }
 
   useEffect(() => {
-    setIsBrowser(!isMobile)
+    setIsBrowser(!detectMobile)
+    setIsMobile(detectMobile)
     
     setMap(dynamic(import('./BusMap'), {
       ssr: false,
@@ -101,7 +104,7 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
       <div className="hidden md:block mb-5 text-secondary text-2xl font-medium">
         公車動態
       </div>
-      <section>
+      <section className="relative">
         <ul className="tabs">
           <li
             key={`tab`}
@@ -168,7 +171,7 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
             ))}
           </ul>
           <div className="hidden md:block w-2/3 h-128 rounded">
-            {isBrowser && !isMobile &&
+            {isBrowser &&
               <Map shape={shape} direction={direction} routeInfo={routeInfo} currentStopId={currentStopId} />}
           </div>
           <div className="
@@ -180,10 +183,9 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
           ">
             <button
               type="button"
-              className="
-              py-3 flex-1 rounded-[40px] bg-white text-primary
-              flex items-center justify-center
-            ">
+              className="py-3 flex-1 rounded-[40px] bg-white text-primary flex items-center justify-center"
+              onClick={() => setMapPopup(true)}
+            >
               <LocateIcon className="w-5 h-5 mr-2" />
               <span>站牌地圖</span>
             </button>
@@ -202,6 +204,20 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
               "
             >
               <RefreshIcon className="w-5" onClick={refresh} />
+            </button>
+          </div>
+          <div className={`${mapPopup ? '' : 'hidden'} md:hidden absolute inset-0 bg-[#269385] bg-opacity-50 backdrop-filter backdrop-blur-[50px] p-2.5 z-999 rounded-2xl flex flex-col items-center`}>
+            {mapPopup && (
+              <div className="w-full h-[calc(100%-100px)] mb-2">
+                <Map shape={shape} direction={direction} routeInfo={routeInfo} currentStopId={currentStopId}  className="rounded-2xl" />
+              </div>
+            )}
+            <button
+              type="button"
+              className="rounded-1 w-10 h-10 bg-secondary text-white p-2"
+              onClick={() => setMapPopup(false)}
+            >
+              <XIcon />
             </button>
           </div>
         </div>

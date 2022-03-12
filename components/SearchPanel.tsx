@@ -1,13 +1,15 @@
 import { useRouter } from 'next/router'
-import { bindActionCreators, Dispatch } from 'redux'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { MobileView, isMobile } from 'react-device-detect'
 import SelectCard from './SelectCard'
 import TabLayout from './TabLayout'
-import { RootState } from '@/store'
 import { setCurrentCity, setOtherCity } from '@/store/search/action'
 import IconBus from '@/assets/icons/bus.svg'
+
+import type { Dispatch } from 'redux'
+import type { RootState } from '@/store'
 
 interface IProps {
   cities: ICity[]
@@ -45,6 +47,17 @@ const SearchPanel = ({ cities, currentCity, otherCity, setCurrentCity, setOtherC
 
   const dropdownRef = useRef<HTMLDivElement>(null)
 
+  const otherClick = (e: MouseEvent) => {
+    e.stopPropagation()
+
+    if (!isMobile) {
+      setIsOpen(!isOpen)
+      return
+    }
+
+    router.push('/city')
+  }
+
   useEffect(() => {
     function handleClickOutside (e: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Element)) {
@@ -57,7 +70,7 @@ const SearchPanel = ({ cities, currentCity, otherCity, setCurrentCity, setOtherC
     return () => {
       document.removeEventListener('click', handleClickOutside)
     }
-  }, [dropdownRef])
+  }, [])
 
   useEffect(() => {
     setDisplayCount(isMobile ? 5 : 4)
@@ -86,19 +99,18 @@ const SearchPanel = ({ cities, currentCity, otherCity, setCurrentCity, setOtherC
         <div className="relative" ref={dropdownRef}>
           <SelectCard
             active={!!(currentCity.City && otherCity.City)}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={otherClick}
           >
             <div className="relative w-full">
               <div className="block md:hidden w-6 h-6 mb-7">
                 <IconBus />
               </div>
-              <div className="flex justify-between md:justify-center">
+              <div className="flex justify-between md:(block)">
                 <div className={`${otherCity.City ? 'text-xs -translate-y-2/2 text-gray-300' : ''} transform transition-all`}>其他</div>
                 <div className={`${otherCity.City ? '-translate-y-2/3' : ''} transform transition-transform`}>{otherCity?.CityName}</div>
                 <ChevronDownIcon
-                  className={`
-                    w-5
-                    md:absolute left-1/3 ${otherCity.City ? '-bottom-1/5' : '-bottom-4/5'}
+                  className={`hidden md:(inline-block w-5 absolute) left-1/3
+                    ${otherCity.City ? '-bottom-1/5' : '-bottom-4/5'}
                     ${isOpen ? 'text-primary' : 'text-gray-200'}
                   `}
                 />

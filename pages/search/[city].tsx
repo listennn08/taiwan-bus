@@ -45,7 +45,8 @@ const Search = ({ cityName, isError }: IProps) => {
         <div className="min-w-10 mr-4 text-blue-700">{cityName}</div>
         <BaseInput
           placeholder="搜尋公車號"
-          className="border border-[#C5F1EC] flex-1 shadow-none py-3 placeholder-gray-300"
+          containerClassName="flex-1"
+          className="border border-[#C5F1EC] w-full shadow-none py-3 placeholder-gray-300"
           type='num'
           value={text}
           show={showNumButton}

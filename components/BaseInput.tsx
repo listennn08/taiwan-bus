@@ -5,6 +5,7 @@ interface IProps {
   value: string
   placeholder?: string
   className?: string
+  containerClassName?: string
   type?: string
   show?: boolean
   onNumClick?: (e: MouseEvent) => void
@@ -13,9 +14,9 @@ interface IProps {
   onBlur?: (e: FocusEvent) => void
 }
 
-const BaseInput = ({ value, placeholder, className, type, show, onNumClick, onChange, onFocus, onBlur }: IProps, ref: ForwardedRef<HTMLDivElement>) => {
+const BaseInput = ({ value, placeholder, className, containerClassName, type, show, onNumClick, onChange, onFocus, onBlur }: IProps, ref: ForwardedRef<HTMLDivElement>) => {
   return (
-    <div ref={ref}>
+    <div ref={ref} className={containerClassName}>
       <input
         placeholder={placeholder}
         value={value}

@@ -1,10 +1,11 @@
-import { ChangeEvent, FocusEvent,  } from 'react'
 import debounce from 'lodash.debounce'
-import { getRouteByCity, getRoutes, getStations } from '@/pages/api'
+import { getRouteByCity, getStations } from '@/pages/api'
 import { setKeyword, setIsLoading, setResultBusRoutes, setResultStations } from '@/store/search/action'
-import { RootState } from '@/store'
 import { ISearchReducer } from '@/store/search/reducer'
 import { from, map, mergeMap } from 'rxjs'
+
+import type { ChangeEvent } from 'react'
+import type { RootState } from '@/store'
 
 async function routesByCity({ city, keyword }: { city: string, keyword: string }) {
   let filter
@@ -66,11 +67,10 @@ export const useSearch = () => {
   const handleChange = (e: ChangeEvent) => {
     const element = e.target as HTMLInputElement
     setText(element.value)
-    search(element.value)
   }
 
-  const handleFocus = (e: FocusEvent) => setShowNumButton(true)
-  const handleBlur = (e: FocusEvent) => setShowNumButton(false)
+  const handleFocus = () => setShowNumButton(true)
+  const handleBlur = () => setShowNumButton(false)
 
   const fetchResult = useMemo(() => async () => {
     if (!idx) {
@@ -110,6 +110,8 @@ export const useSearch = () => {
       setFirstLoading(false)
     }
   }, [keyword, currentCity.CityName, fetchResult])
+
+  useEffect(() => { search(text) }, [text, search])
 
   return {
     text,

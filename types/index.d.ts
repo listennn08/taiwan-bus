@@ -3,6 +3,7 @@ interface IMapProp {
   direction: number
   routeInfo: IBusStopOfRoute[]
   currentStopId: string
+  className?: string
 }
 interface ICity {
   City: string

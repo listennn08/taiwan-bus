@@ -1,8 +1,21 @@
+import { LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet'
 import BaseMarkerIcon from './BaseMarkerIcon'
 
 const MapController = ({ currentStopId, routeInfo, direction }: IMapProp) => {
   const map = useMap()
+  const [pos, setPos] = useState<LatLngTuple>([0, 0])
+
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(function(position) {
+  //     setPos([position.coords.latitude, position.coords.longitude] as LatLngTuple)
+  //   })
+  // }, [])
+
+  useEffect(() => {
+    const { StopPosition } = routeInfo[direction].Stops[0]
+    setPos([StopPosition.PositionLat!, StopPosition.PositionLon!])
+  }, [routeInfo, direction])
 
   useEffect(() => {
     if (currentStopId && currentStopId !== '') {
@@ -13,6 +26,10 @@ const MapController = ({ currentStopId, routeInfo, direction }: IMapProp) => {
     }
   }, [currentStopId, direction, map, routeInfo])
 
+  useEffect(() => {
+    map.setView(pos, 16)
+  }, [map, pos])
+
   return (<></>)
 }
 
@@ -20,7 +37,7 @@ const BusMap = (props: IMapProp) => {
   const { shape, direction, routeInfo } = props
 
   return (
-    <MapContainer style={{ width: '100%', height: '100%' }} center={[0,0]} zoom={16} zoomControl={false}>
+    <MapContainer className={props.className} style={{ width: '100%', height: '100%' }} zoomControl={false}>
       <MapController {...props} />
       <TileLayer 
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

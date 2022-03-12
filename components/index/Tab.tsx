@@ -1,15 +1,16 @@
-import { MouseEvent, ReactChild } from 'react'
-import { bindActionCreators, Dispatch } from 'redux'
+import { bindActionCreators  } from 'redux'
 import { connect } from 'react-redux'
 import IconBus from '@/assets/icons/bus.svg'
 import IconStop from '@/assets/icons/stop.svg'
 import IconCar from '@/assets/icons/car.svg'
 import IconLineArrow from '@/assets/icons/lineArrow.svg'
-import { setCurrentCity, setIdx, setIsLoading, setKeyword, setResultBusRoutes, setResultStations } from '@/store/search/action'
-
-import type { RootState } from '@/store'
-import BaseInput from './BaseInput'
+import { setCurrentCity, setIdx, setKeyword, setResultBusRoutes, setResultStations } from '@/store/search/action'
 import { useSearch } from '@/logic/useSearch'
+import BaseInput from '../BaseInput'
+
+import type { MouseEvent, ReactChild } from 'react'
+import type { Dispatch } from 'redux'
+import type { RootState } from '@/store'
 
 interface IProps {
   idx: number
@@ -18,13 +19,12 @@ interface IProps {
   children: ReactChild
   setCurrentCity: typeof setCurrentCity
   setIdx: typeof setIdx
-  setIsLoading: typeof setIsLoading
   setKeyword: typeof setKeyword
   setResultBusRoutes: typeof setResultBusRoutes
   setResultStations: typeof setResultStations
 }
 
-const TabLayout = ({ idx, children, setCurrentCity, setIdx, setIsLoading, setKeyword, setResultBusRoutes, setResultStations }: IProps) => {
+const Tab = ({ idx, children, setCurrentCity, setIdx, setKeyword, setResultBusRoutes, setResultStations }: IProps) => {
   const { text, handleChange } = useSearch()
   const placeholder = idx === 0 ? '搜尋公車號碼' : idx === 1 ? '搜尋站牌名稱' : '搜尋客運號碼'
 
@@ -55,7 +55,7 @@ const TabLayout = ({ idx, children, setCurrentCity, setIdx, setIsLoading, setKey
   ]
 
   return (
-    <div className="flex h-full md:items-start">
+    <>
       <div className="hidden md:flex">
         <div className="lg:pl-30 bg-white bg-opacity-90" />
         <div>
@@ -84,12 +84,8 @@ const TabLayout = ({ idx, children, setCurrentCity, setIdx, setIsLoading, setKey
             min-h-89
           ">
             <div className={idx === 2 ? 'hidden' : ''}>
-              <h4 className="tab-ask-title">
-                搭乘城市：
-              </h4>
-              <div className="mb-7.5">
-                {children}
-              </div>
+              <h4 className="tab-ask-title">搭乘城市：</h4>
+              <div className="mb-7.5">{children}</div>
             </div>
             <div className={idx === 2 ? 'pb-9' : ''}>
               <h4 className="tab-ask-title">公車號碼：</h4>
@@ -107,7 +103,7 @@ const TabLayout = ({ idx, children, setCurrentCity, setIdx, setIsLoading, setKey
           {children}
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -120,11 +116,9 @@ const mapStateToProps = (state: RootState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setCurrentCity: bindActionCreators(setCurrentCity, dispatch),
   setIdx: bindActionCreators(setIdx, dispatch),
-  setIsLoading: bindActionCreators(setIsLoading, dispatch),
   setKeyword: bindActionCreators(setKeyword, dispatch),
   setResultBusRoutes: bindActionCreators(setResultBusRoutes, dispatch),
   setResultStations: bindActionCreators(setResultStations, dispatch),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabLayout)
-
+export default connect(mapStateToProps, mapDispatchToProps)(Tab)

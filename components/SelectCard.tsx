@@ -9,7 +9,7 @@ interface IProps {
 const SelectCard = ({ children, onClick, active }: IProps) => {
   return (
     <div
-      className={`selectCard ${active ? 'active' : ''}`}
+      className={`selected-card ${active ? 'active' : ''}`}
       onClick={onClick}
     >
       {children}

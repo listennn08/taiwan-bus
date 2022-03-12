@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
-import BaseCard from '@/components/BaseCard'
-import { RootState } from '@/store'
 import { connect } from 'react-redux'
+import { RootState } from '@/store'
 import { replaceToURI } from '@/utils'
+import BaseCard from '@/components/BaseCard'
 
 interface IProps {
   idx: number
@@ -21,33 +21,22 @@ const SearchResult = ({ idx, currentCity, resultBusRoutes, resultBusStation }: I
     const url = Buffer.from(`${city}_${routeName}_${routeUID}_${operatorID}`).toString('base64')
     return replaceToURI(url)
   }
+
   return (
     <div className="h-full  md:(pt-0 ml-9.5) overflow-y-hidden">
       <p
-        className={`
-          hidden md:block
-          text-gray-500 leading-4
-          ml-2.5 pb-5
-          font-medium
+        className={`hidden md:block text-gray-500 leading-4 ml-2.5 pb-5 font-medium
           ${showTitle ? '' : 'hidden'}
         `}
       >
         {searchType}搜尋結果
       </p>
-      <div className="
-        h-full flex flex-col md:flex-row md:items-start md:content-start
-        md:flex-wrap
-        overflow-y-scroll 
-        pb-10
-        scroll:hidden
-      ">
+      <div className="h-full flex flex-col md:flex-row md:(items-start content-start flex-wrap) overflow-y-scroll  pb-10 scroll:hidden">
         {idx === 0 && resultBusRoutes.map((route) => (
           <BaseCard
             key={route.RouteUID}
             text={`${route.SubRoutes?.[0].FirstBusTime || ''} - ${route.SubRoutes?.[0].LastBusTime || ''}`}
-            onClick={() => router.push(encodeURI(
-              `/info/${generateURL(currentCity.City!, route.RouteName.Zh_tw!, route.RouteUID, route.Operators[0].OperatorID)}`
-            ))}
+            onClick={() => router.push(encodeURI(`/info/${generateURL(currentCity.City!, route.RouteName.Zh_tw!, route.RouteUID, route.Operators[0].OperatorID)}`))}
           >
             <>{route.RouteName.Zh_tw}</>
             <>{route.DepartureStopNameZh} - {route.DestinationStopNameZh}<br /></>
