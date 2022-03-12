@@ -3,8 +3,9 @@ import { ArrowNarrowLeftIcon } from '@heroicons/react/solid'
 import Background from '@/components/layouts/Background'
 import LineArrowIcon from '@/assets/icons/lineArrow.svg'
 import BusIcon from '@/assets/icons/bus.svg'
-import { RootState } from '@/store'
+import { RootState, wrapper } from '@/store'
 import { ISearchReducer } from '@/store/search/reducer'
+import { setCities } from '@/store/search/action'
 
 const City = () => {
   const { cities } = useSelector<RootState, ISearchReducer>((state) => state.search)
@@ -40,5 +41,19 @@ const City = () => {
     </div>
   )
 }
+
+export const getStaticProps = wrapper.getStaticProps((store) => async (): Promise<any> => {
+  try {
+    const cities = (await axios.get('https://raw.githubusercontent.com/listennn08/jsonData/master/cities.json'))
+      .data.cities as ICity[]
+    setCities(cities)(store.dispatch)
+  } catch (e) {
+    return {
+      redirect: {
+        destination: "/500",
+      },
+    }
+  }
+})
 
 export default City
