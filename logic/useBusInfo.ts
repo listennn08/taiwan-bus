@@ -106,18 +106,18 @@ export const useBusInfo = (props: IProps) => {
     fetchData()
   }
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     if (time > 0) {
-  //       setTime((v) => v - 5)
-  //     } else {
-  //       setTime(defaultTime)
-  //       fetchData()
-  //     }
-  //   }, 5000)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (time > 0) {
+        setTime((v) => v - 5)
+      } else {
+        setTime(defaultTime)
+        fetchData()
+      }
+    }, 5000)
 
-  //   return () => clearTimeout(timer)
-  // }, [time, fetchData])
+    return () => clearTimeout(timer)
+  }, [time, fetchData])
 
   return {
     cityName,
