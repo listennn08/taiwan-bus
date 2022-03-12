@@ -1,6 +1,5 @@
 import L from 'leaflet'
-
-const timeConverter = (t: number) => t ? Math.floor(t / 60) : 0
+import { timeConverter } from '@/utils'
 
 const BaseMarkerIcon = ({ el }: { el: IStop }) => {
   const time = timeConverter(el?.TimeInfo?.EstimateTime!)!

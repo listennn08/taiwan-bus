@@ -8,3 +8,5 @@ export const replaceToURI = (s: string) => {
 export const replaceFromURI = (s: string) => {
   return Object.entries(convertDic).reduce((acc, [key, value]) => acc.replace(value, key), s)
 }
+
+export const timeConverter = (t: number) => t ? Math.floor(t / 60) : 0
