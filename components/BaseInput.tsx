@@ -8,13 +8,14 @@ interface IProps {
   containerClassName?: string
   type?: string
   show?: boolean
+  readonly?: boolean
   onNumClick?: (e: MouseEvent) => void
   onChange?: (e: ChangeEvent) => void
   onFocus?: (e: FocusEvent) => void
   onBlur?: (e: FocusEvent) => void
 }
 
-const BaseInput = ({ value, placeholder, className, containerClassName, type, show, onNumClick, onChange, onFocus, onBlur }: IProps, ref: ForwardedRef<HTMLDivElement>) => {
+const BaseInput = ({ value, placeholder, className, containerClassName, type, show, readonly, onNumClick, onChange, onFocus, onBlur }: IProps, ref: ForwardedRef<HTMLDivElement>) => {
   return (
     <div ref={ref} className={containerClassName}>
       <input
@@ -31,7 +32,7 @@ const BaseInput = ({ value, placeholder, className, containerClassName, type, sh
           transition-colors
           shadow-md
         `}
-        
+        readOnly={readonly}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}

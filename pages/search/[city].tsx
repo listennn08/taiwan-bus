@@ -55,10 +55,11 @@ const Search = ({ cityName, isError }: IProps) => {
           type='num'
           value={text}
           show={showNumButton}
+          readonly={true}
+          ref={inputEl}
           onNumClick={handleNumClick}
           onChange={handleChange}
           onFocus={onHandleFocus}
-          ref={inputEl}
         />
       </div>
       {isError ? <h2 className="text-primary text-xl">Something Wrong... Please retry.</h2> : <SearchResult />}
