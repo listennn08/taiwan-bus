@@ -28,7 +28,7 @@ const InfoBus = (props: IProps) => {
 
   return (
     <div className="
-      bg-gradient-to-b from-[#70EBB0] to-[#40CACA] md:bg-light h-full overflow-y-hidden md:overflow-y-scroll md:pb-10
+      bg-gradient-to-b from-[#70EBB0] to-[#40CACA] h-full overflow-y-hidden md:(overflow-y-scroll pb-10 bg-light)
     ">
       <div className="container mx-auto md:px-0 pt-2.5 md:pt-15">
         <InfoHeader cityName={cityName} route={route} routeInfo={routeInfo} time={time} refresh={refresh} isOpen={isOpen} setIsOpen={setIsOpen} />
