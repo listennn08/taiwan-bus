@@ -16,10 +16,9 @@ const StopStatus = [
 
 const arriveDisplay = (stop?: IStop) => {
   if (stop?.TimeInfo?.StopStatus !== 0) {
-    const  text = StopStatus[stop?.TimeInfo?.StopStatus || 4] || '';
-    return (
-      <BaseArrivalLabel text={text} type="bg-gray-300" />
-    )
+    const status =  (stop?.TimeInfo?.StopStatus || 4) - 1
+    const  text = StopStatus[status] || ''
+    return <BaseArrivalLabel text={text} type="bg-gray-300" />
   }
 
   if (typeof stop?.TimeInfo?.EstimateTime === 'number') {
@@ -70,13 +69,13 @@ const BusStatus = ({ route, routeInfo, shape, refresh }: IProps) => {
   }
 
   const handleMouseEnter = (e: MouseEvent, id: string) => {
-    setHoverStopId(id)
+    if (!isMobile)  setHoverStopId(id)
     const el = e.target as HTMLLIElement
     el.classList.add('is-hover')
   }
 
   const handleMouseLeave = (e: MouseEvent) => {
-    setHoverStopId('')
+    if (!isMobile)  setHoverStopId('')
     const el = e.target as HTMLLIElement
     el.classList.remove('is-hover')
   }
