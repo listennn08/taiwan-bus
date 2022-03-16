@@ -24,10 +24,11 @@ const Layout: NextPage = ({ children }) => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="等等公車"/>
         <meta property="og:description" content="全台公車資訊整合" />
-        <meta property="og:image" content="https://listennn-taiwan-bus.herokuapp.com/logo.svg" />
+        <meta property="og:image" content="https://taiwan-bus.netlify.app/logo.svg" />
         <meta itemProp="name" content="等等公車" />
         <meta itemProp="description" content="全台公車資訊整合" />
-        <meta itemProp="image" content="https://listennn-taiwan-bus.herokuapp.com/logo.svg" />
+        <meta itemProp="image" content="https://taiwan-bus.netlify.app/logo.svg" />
+        <link rel="apple-touch-icon" href="/logo.svg" />
       </Head>
       <main className="main mt-15 md:mt-16.5 h-[calc(100vh-60px)] md:h-[calc(100vh-146px)]">
         {children}
