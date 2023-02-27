@@ -31,7 +31,7 @@ provide('busInfo', busInfo)
 const fetchRouteInfo = async () => {
   stopOfRoute.splice(0, stopOfRoute.length)
   const { data } = await useMyFetch<StopOfRoute[]>(
-    `/api/basic/v2/Bus/DisplayStopOfRoute/City/${city}/${routeName}?$format=JSON`
+    `/api/basic/v2/Bus/StopOfRoute/City/${city}/${routeName}?$format=JSON`
   )
     .get()
     .json()
