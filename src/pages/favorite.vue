@@ -93,69 +93,71 @@ const remove = (type: string, idx: number) => {
 <template>
   <section relative>
     <div py="14">
-      <TransitionGroup name="list" tag="ul">
-        <template v-if="currentTab === 'stop'">
-          <li
-            v-for="(stop, idx) in favoriteStops"
-            :key="stop.StopUID"
-            relative
-            bg="primary-light"
-            rounded="lg"
-            class="shadow-default"
-            v-touch:swipe="(event: string) => swipeLeft(event, idx)"
-          >
-            <button
-              pos="absolute top-0 right-0 bottom-0"
-              px="8.5"
-              py="5"
-              rounded="lg"
-              bg="transparent"
-              text="white"
-              border="none"
-              focus:outline="none"
-              @click.prevent="remove('stop', idx)"
-            >
-              刪除
-            </button>
-            <div
-              grid="~ cols-[0.5fr_1fr_0.5fr]"
-              rounded="lg"
-              bg="white"
-              text="primary"
-              py="3"
-              px="5"
-              mb="4"
+      <ClientOnly>
+        <TransitionGroup name="list" tag="ul">
+          <template v-if="currentTab === 'stop'">
+            <li
+              v-for="(stop, idx) in favoriteStops"
+              :key="stop.StopUID"
               relative
-              transition="opacity-300 transform-300 ease-out"
-              :translate-x="removeArray[idx] ? '-23' : '0'"
+              bg="primary-light"
+              rounded="lg"
+              class="shadow-default"
+              v-touch:swipe="(event: string) => swipeLeft(event, idx)"
             >
-              <div>
-                <span text="sm" lh="20px">
-                  {{ stop.routeName }}
-                </span>
-                <br />
-                <span text="xs" lh="14px"> 往{{ stop.endStop }} </span>
+              <button
+                pos="absolute top-0 right-0 bottom-0"
+                px="8.5"
+                py="5"
+                rounded="lg"
+                bg="transparent"
+                text="white"
+                border="none"
+                focus:outline="none"
+                @click.prevent="remove('stop', idx)"
+              >
+                刪除
+              </button>
+              <div
+                grid="~ cols-[0.5fr_1fr_0.5fr]"
+                rounded="lg"
+                bg="white"
+                text="primary"
+                py="3"
+                px="5"
+                mb="4"
+                relative
+                transition="opacity-300 transform-300 ease-out"
+                :translate-x="removeArray[idx] ? '-23' : '0'"
+              >
+                <div>
+                  <span text="sm" lh="20px">
+                    {{ stop.routeName }}
+                  </span>
+                  <br />
+                  <span text="xs" lh="14px"> 往{{ stop.endStop }} </span>
+                </div>
+                <div flex items="center" justify="center">
+                  {{ stop.StopName.Zh_tw }}
+                </div>
+                <div text="end">
+                  <span text="sm" lh="20px"> {{ stop.estimateTime }} </span>
+                  <br />
+                  <span text="xs" lh="14px"> {{ countdown }} 秒前更新 </span>
+                </div>
               </div>
-              <div flex items="center" justify="center">
-                {{ stop.StopName.Zh_tw }}
-              </div>
-              <div text="end">
-                <span text="sm" lh="20px"> {{ stop.estimateTime }} </span>
-                <br />
-                <span text="xs" lh="14px"> {{ countdown }} 秒前更新 </span>
-              </div>
-            </div>
-          </li>
-        </template>
-        <template v-else>
-          <RouteCard
-            v-for="routeInfo in favoriteRoutes"
-            :key="routeInfo.RouteUID"
-            :showFavBtn="false"
-            :routeInfo="routeInfo"
-          />
-        </template>
-      </TransitionGroup>
+            </li>
+          </template>
+          <template v-else>
+            <RouteCard
+              v-for="routeInfo in favoriteRoutes"
+              :key="routeInfo.RouteUID"
+              :showFavBtn="false"
+              :routeInfo="routeInfo"
+            />
+          </template>
+        </TransitionGroup>
+      </ClientOnly>
     </div>
     <div
       absolute

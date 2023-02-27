@@ -61,6 +61,7 @@
     "useCssModule": true,
     "useCssVars": true,
     "useFetch": true,
+    "useHead": true,
     "useIntervalFn": true,
     "useLink": true,
     "useLocalStorage": true,

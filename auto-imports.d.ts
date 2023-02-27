@@ -58,6 +58,7 @@ declare global {
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useFetch: typeof import('@vueuse/core')['useFetch']
+  const useHead: typeof import('@vueuse/head')['useHead']
   const useIntervalFn: typeof import('@vueuse/core')['useIntervalFn']
   const useLink: typeof import('vue-router')['useLink']
   const useLocalStorage: typeof import('@vueuse/core')['useLocalStorage']

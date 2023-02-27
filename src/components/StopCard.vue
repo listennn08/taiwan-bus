@@ -81,7 +81,7 @@ const isFavorite = computed(() =>
 <template>
   <div flex items="center">
     <div
-      w="12"
+      w="16"
       :class="`bg-${getEstimatedTime(stop.StopUID).bg}`"
       text="white xs center"
       px="3"
@@ -94,7 +94,7 @@ const isFavorite = computed(() =>
     <span text="sm primary" lh="20px" mx="2.5">
       {{ stop.StopName.Zh_tw }}
     </span>
-    <div
+    <span
       v-if="getBusPlateNumb(stop.StopUID)"
       text="xs white"
       bg="yellow"
@@ -103,7 +103,7 @@ const isFavorite = computed(() =>
       py="1"
     >
       {{ getBusPlateNumb(stop.StopUID) }}
-    </div>
+    </span>
   </div>
   <button
     v-if="showFavBtn"

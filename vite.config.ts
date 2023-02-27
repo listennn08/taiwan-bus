@@ -8,6 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'
+import ViteSSR from 'vite-ssr/plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -34,6 +35,7 @@ export default defineConfig({
             'useLocalStorage',
             'useIntervalFn',
           ],
+          '@vueuse/head': ['useHead'],
         },
         {
           'lodash-es': ['get', 'cloneDeep', 'omitBy'],
@@ -88,6 +90,7 @@ export default defineConfig({
         ],
       },
     }),
+    ViteSSR(),
   ],
   resolve: {
     alias: {

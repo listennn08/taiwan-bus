@@ -1,8 +1,8 @@
-import { createApp } from 'vue'
+import { ViteSSG } from 'vite-ssg'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
-import router from './router'
+import routes from '~pages'
 
 import '@unocss/reset/eric-meyer.css'
 import 'uno:components.css'
@@ -11,12 +11,11 @@ import './assets/main.css'
 import 'virtual:unocss-devtools'
 import 'uno:utilities.css'
 
-import Vue3TouchEvents from 'vue3-touch-events'
 
-const app = createApp(App)
+export const createApp = ViteSSG(App, { routes }, async ({ app, isClient }) => {
+  if (isClient) {
+    const Vue3TouchEvents = await import('vue3-touch-events')
+    app.use(Vue3TouchEvents.default)
+  }
+})
 
-app.use(createPinia())
-app.use(router)
-app.use(Vue3TouchEvents)
-
-app.mount('#app')
