@@ -1,0 +1,16 @@
+body {
+  background: linear-gradient(144.86deg, #FAF0DF -10.56%, #EDEDCC 114.15%);
+}
+
+#app {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: linear-gradient(144.86deg, #FAF0DF -10.56%, #EDEDCC 114.15%);
+  max-width: 414px;
+  min-height: 100vh;
+  margin: 0 auto;
+  font-weight: normal;
+}
+
+.shadow-default {
+  box-shadow: 0 8px 20px 4px #E3DEC7;
+}
