@@ -45,7 +45,7 @@ const isFavorite = computed(() =>
 </script>
 <template>
   <router-link
-    :to="`/bus/${routeInfo.RouteName.Zh_tw}?city=${routeInfo.City}`"
+    :to="`/bus/${routeInfo.RouteUID}?city=${routeInfo.City}`"
     grid="~ cols-[0.5fr_1.4fr_0.1fr] gap-2"
     px="5"
     py="2.5"

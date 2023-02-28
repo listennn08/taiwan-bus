@@ -2,7 +2,7 @@
 import { estimateTimeFields, realTimeFields, infoFields } from '@/constants'
 
 const route = useRoute()
-const { routeName } = route.params
+const { routeUID } = route.params
 const { city } = route.query
 
 const direction = ref(0)
@@ -29,30 +29,30 @@ provide('estimatedTime', estimatedTime)
 provide('busInfo', busInfo)
 
 const fetchRouteInfo = async () => {
-  stopOfRoute.splice(0, stopOfRoute.length)
-  const { data } = await useMyFetch<StopOfRoute[]>(
-    `/api/basic/v2/Bus/StopOfRoute/City/${city}/${routeName}?$format=JSON`
-  )
-    .get()
-    .json()
-
-  stopOfRoute.push(...data.value)
-
   const { data: routeInfoResp } = await useMyFetch<RouteInfo[]>(
-    `/api/basic/v2/Bus/Route/City/${city}/${routeName}?$select=${infoFields}&$format=JSON`
+    `/api/basic/v2/Bus/Route/City/${city}?$select=${infoFields}&$filter=RouteUID eq '${routeUID}'&$format=JSON`
   )
     .get()
     .json()
   Object.keys(routeInfoResp.value[0]).forEach((key) => {
     routeInfo[key] = routeInfoResp.value[0][key]
   })
+
+  stopOfRoute.splice(0, stopOfRoute.length)
+  const { data } = await useMyFetch<StopOfRoute[]>(
+    `/api/basic/v2/Bus/StopOfRoute/City/${city}/${routeInfo.RouteName?.Zh_tw}?$format=JSON`
+  )
+    .get()
+    .json()
+
+  stopOfRoute.push(...data.value)
 }
 
 const fetchArriveInfo = async () => {
   estimatedTime.splice(0, estimatedTime.length)
   busInfo.splice(0, busInfo.length)
   useMyFetch<EstimatedTimeOfArrival[]>(
-    `/api/basic/v2/Bus/EstimatedTimeOfArrival/City/${city}/${routeName}?$select=${estimateTimeFields}&$filter=Direction eq ${direction.value}&$format=JSON`
+    `/api/basic/v2/Bus/EstimatedTimeOfArrival/City/${city}/${routeInfo.RouteName?.Zh_tw}?$select=${estimateTimeFields}&$filter=Direction eq ${direction.value}&$format=JSON`
   )
     .get()
     .json()
@@ -61,7 +61,7 @@ const fetchArriveInfo = async () => {
     })
 
   useMyFetch<RealTimeNearStop[]>(
-    `/api/basic/v2/Bus/RealTimeNearStop/City/${city}/${routeName}?$select=${realTimeFields}&$filter=Direction eq ${direction.value}&$format=JSON`
+    `/api/basic/v2/Bus/RealTimeNearStop/City/${city}/${routeInfo.RouteName?.Zh_tw}?$select=${realTimeFields}&$filter=Direction eq ${direction.value}&$format=JSON`
   )
     .get()
     .json()
@@ -103,7 +103,8 @@ useIntervalFn(() => {
           :endStop="endStopOfDirection"
           :direction="direction"
           :city="city"
-          :routeName="routeName"
+          :routeUID="routeInfo.RouteUID"
+          :routeName="routeInfo.RouteName?.Zh_tw"
         />
       </li>
     </ul>
@@ -121,7 +122,7 @@ useIntervalFn(() => {
       justify="between"
     >
       <div text="14px" lh="20px">
-        {{ routeName }}
+        {{ routeInfo.RouteName?.Zh_tw }}
         <br />
         往{{ endStopOfDirection }}
       </div>

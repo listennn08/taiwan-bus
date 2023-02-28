@@ -35,9 +35,8 @@ export default defineConfig({
             'useIntervalFn',
           ],
           '@vueuse/head': ['useHead'],
-        },
-        {
           'lodash-es': ['get', 'cloneDeep', 'omitBy'],
+          dayjs: [['default', 'dayjs']],
         },
       ],
       dts: true,

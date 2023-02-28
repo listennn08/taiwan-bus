@@ -46,7 +46,11 @@ onBeforeMount(async () => {
         </div>
       </template>
       <template #default>
-        <RouterView />
+        <RouterView v-slot="{ Component }">
+          <KeepAlive include="search">
+            <component :is="Component" :key="$route.fullPath" />
+          </KeepAlive>
+        </RouterView>
       </template>
     </Suspense>
   </main>

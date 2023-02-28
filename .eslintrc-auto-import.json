@@ -13,6 +13,7 @@
     "createApp": true,
     "createFetch": true,
     "customRef": true,
+    "dayjs": true,
     "defineAsyncComponent": true,
     "defineComponent": true,
     "effectScope": true,
