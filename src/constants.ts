@@ -10,6 +10,7 @@ export const infoFields = [
 ].join()
 
 export const estimateTimeFields = [
+  'RouteUID',
   'Direction',
   'EstimateTime',
   'StopStatus',

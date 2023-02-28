@@ -61,9 +61,13 @@ const fetchStopStatus = async (stop: FavStop) => {
     .json()
   const resp = data.value[0]
   for (let i = 0; i < favoriteStops.value.length; i++) {
-    if (stop.StopUID === favoriteStops.value[i].StopUID) {
+    const { StopUID, routeUID } = favoriteStops.value[i]
+    if (stop.StopUID === StopUID && stop.routeUID === routeUID) {
+      const busStatus = resp?.NextBusTime
+        ? dayjs(resp.NextBusTime).format('HH:mm')
+        : stopStatusMap[resp.StopStatus - 1]
       favoriteStops.value[i].estimateTime = resp.StopStatus
-        ? stopStatusMap[resp.StopStatus - 1]
+        ? busStatus
         : `${Math.ceil(resp.EstimateTime / 60)} 分`
       break
     }

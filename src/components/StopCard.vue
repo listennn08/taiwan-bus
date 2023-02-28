@@ -6,6 +6,7 @@ const props = withDefaults(
     stop: Stop
     endStop: string
     city: string
+    routeUID: string
     routeName: string
     direction: number
     showFavBtn?: boolean
@@ -34,19 +35,19 @@ const getEstimatedTime = (stopUID: string) => {
         value: stopStatusMap[stopItem.StopStatus - 1],
         bg: 'primary-light',
       }
-    } else {
-      const estimateTime = Math.floor(stopItem.EstimateTime / 60)
-      const displayTime = estimateTime < 1 ? '即將進站' : `${estimateTime} 分`
+    }
+    const estimateTime = Math.floor(stopItem.EstimateTime / 60)
+    const displayTime = estimateTime < 1 ? '即將進站' : `${estimateTime} 分`
 
-      return {
-        value:
-          typeof stopItem.EstimateTime === 'number'
-            ? displayTime
-            : stopItem.NextBusTime,
-        bg: getClass(estimateTime),
-      }
+    return {
+      value:
+        typeof stopItem.EstimateTime === 'number'
+          ? displayTime
+          : stopItem.NextBusTime,
+      bg: getClass(estimateTime),
     }
   }
+
   return {
     value: '',
     bg: '',
@@ -62,7 +63,8 @@ const getBusPlateNumb = (stopUID: string) => {
 const favoriteStops = useLocalStorage<FavStop[]>('favoriteStops', [])
 const collectStop = () => {
   const idx = favoriteStops.value.findIndex(
-    ({ StopUID }) => StopUID === props.stop.StopUID
+    ({ routeUID, StopUID }) =>
+      StopUID === props.stop.StopUID && routeUID === props.routeUID
   )
   if (idx > -1) {
     favoriteStops.value.splice(idx, 1)
@@ -75,7 +77,10 @@ const collectStop = () => {
 }
 
 const isFavorite = computed(() =>
-  favoriteStops.value.find(({ StopUID }) => StopUID === props.stop.StopUID)
+  favoriteStops.value.find(
+    ({ routeUID, StopUID }) =>
+      StopUID === props.stop.StopUID && routeUID === props.routeUID
+  )
 )
 </script>
 <template>

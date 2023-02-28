@@ -66,6 +66,7 @@ interface Position {
 }
 
 interface Stop {
+  RouteUID: string
   StopUID: string
   StopID: string
   StopName: Name
@@ -155,6 +156,7 @@ interface FavStop extends Stop {
   endStop: string
   direction: number
   city: string
+  routeUID: string
   routeName: string
   estimateTime?: string
 }

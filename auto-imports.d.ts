@@ -10,6 +10,7 @@ declare global {
   const createApp: typeof import('vue')['createApp']
   const createFetch: typeof import('@vueuse/core')['createFetch']
   const customRef: typeof import('vue')['customRef']
+  const dayjs: typeof import('dayjs')['default']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const effectScope: typeof import('vue')['effectScope']
